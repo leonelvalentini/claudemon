@@ -1,0 +1,21 @@
+name: Proponer una mejora
+description: Una idea o una función que te gustaría ver
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problema
+    attributes:
+      label: ¿Qué problema querés resolver?
+      description: Contá la situación, no solo la solución. Por ejemplo "no sé qué agente consumió más en cada sesión".
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: ¿Cómo imaginás que sería?
+    validations:
+      required: false
+  - type: markdown
+    attributes:
+      value: |
+        Recordá las reglas del proyecto: un solo archivo, solo lectura, sin red y Python 3.8+. Ver [CONTRIBUTING](../blob/main/CONTRIBUTING.md).
