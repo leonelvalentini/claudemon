@@ -1,0 +1,42 @@
+name: Reportar un problema
+description: Algo no anda, muestra datos incorrectos o se ve mal
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Gracias por avisar. **Antes de pegar nada, revisá que no incluya datos sensibles**: los nombres de sesión pueden mencionar clientes o proyectos privados. Tachalos.
+  - type: textarea
+    id: que
+    attributes:
+      label: ¿Qué pasó?
+      description: Qué esperabas y qué obtuviste. Si es un dato que no cierra, decí cuál y qué mostraba Claude Code.
+    validations:
+      required: true
+  - type: input
+    id: comando
+    attributes:
+      label: Comando que ejecutaste
+      placeholder: claudemon sesiones 7
+    validations:
+      required: true
+  - type: dropdown
+    id: sistema
+    attributes:
+      label: Sistema operativo
+      options: [macOS, Linux, Windows]
+    validations:
+      required: true
+  - type: textarea
+    id: diagnostico
+    attributes:
+      label: Salida de `claudemon diagnostico`
+      description: Pegá el resultado completo.
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: extra
+    attributes:
+      label: Algo más
+      description: Terminal que usás (Windows Terminal, iTerm, Ghostty…), versión de Claude Code, capturas (sin datos sensibles).

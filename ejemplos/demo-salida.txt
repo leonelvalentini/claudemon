@@ -1,0 +1,73 @@
+━━ DEMO — 7 sesiones INVENTADAS (tus datos no se tocan) ━━
+
+$ claudemon sesiones 7
+
+Sesiones — últimos 7 días (desde 25/09 12:03)
+tokens nuevos · USD según Claude Code · % que fue de subagentes
+
+▌ demo-tienda-online — 3 sesiones, 14.5M tokens, USD 178
+      7.5M    $92  sub  88%  Rediseño de la home (v2)                        [4d307fe4]
+                         conv: Opus 5.5 100% | subag.: Opus 5.5 100%
+                         agentes: implementer (Opus 5.5) 3.9M · reviewer (Opus 5.5) 2.6M
+      6.3M    $76  sub  91%  Carrito y pagos con MercadoPago (v2)            [52e6b438]
+                         conv: Sonnet 5.5 100% | subag.: Opus 5.5 100%
+                         agentes: reviewer (Opus 5.5) 3.2M · implementer (Opus 5.5) 2.5M
+      731k     $9  sub   0%  Arreglar el buscador                            [d5ad5360]
+                         conv: Sonnet 5.5 100% | subag.: —
+
+▌ demo-api-clientes — 2 sesiones, 8.9M tokens, USD 114
+      7.5M    $96  sub  83%  Migración a PostgreSQL 16                       [a261621f]
+                         conv: Opus 5.5 100% | subag.: Opus 5.5 100%
+                         agentes: implementer (Opus 5.5) 4.0M · reviewer (Opus 5.5) 2.1M
+      1.5M    $18  sub   0%  Revisar los permisos de la API                  [c3992a90]
+                         conv: Sonnet 5.5 100% | subag.: —
+
+▌ demo — 2 sesiones, 3.0M tokens, USD 37
+      1.8M    $22  sub   0%  Dudas de Docker (v2)                            [b1632468]
+                         conv: Sonnet 5.5 100% | subag.: —
+      1.2M    $15  sub   0%  Script de backup semanal                        [1bda7ad1]
+                         conv: Sonnet 5.5 100% | subag.: —
+
+Para retomar una: claude --resume <los 8 caracteres entre corchetes>  (o elegila por nombre con claude --resume)
+
+$ claudemon modelos 7
+
+Modelos — últimos 7 días (desde 25/09 12:03) · tokens nuevos 26.5M
+
+MODELO              TOTAL    %                CONVERSACIÓN  SUBAGENTES     USD
+Opus 5.5            20.7M  78%   ████████░░           2.2M       18.4M    $258
+Sonnet 5.5           5.8M  22%   ██░░░░░░░░           5.8M           0     $71
+
+Tu conversación vs subagentes, en total:
+  conversación      8.0M  Sonnet 5.5 72% · Opus 5.5 28%
+  subagentes       18.4M  Opus 5.5 100%
+
+Subagentes por tipo de agente y modelo:
+     10.5M   40%  implementer                  Opus 5.5
+      8.0M   30%  reviewer                     Opus 5.5
+
+Por proyecto, qué modelo se usó:
+     14.5M  demo-tienda-online         Opus 5.5 91% · Sonnet 5.5 9%
+      8.9M  demo-api-clientes          Opus 5.5 83% · Sonnet 5.5 17%
+      3.0M  demo                       Sonnet 5.5 100%
+
+→ Del Opus total, 89% lo usaron SUBAGENTES (no tu conversación).
+  Un subagente corre en el modelo que fija su definición (.claude/agents/<tipo>.md, campo model:)
+  aunque tu conversación esté en otro.
+
+$ claudemon limites
+
+━━ LÍMITES · plan Max 20x · Fri 02/10 12:03 ━━
+
+Ventana de 5 horas:
+  sin bloque activo: el próximo mensaje abre uno nuevo.
+
+Semana (desde el reinicio: Tue 29/09 09:00):
+  tokens nuevos 7.5M   Opus 7.5M · Sonnet 0 · otros 0
+  faltan 3 d 20 h para el reinicio · ritmo 2.4M/día · al reinicio llegarías a 16.7M
+  tope todos los modelos calibrado 90.0M: 8% ██░░░░░░░░░░░░░░░░░░; a este ritmo se agota en 34 d 14 h
+
+Ojo: solo cuenta Claude Code. Si usás claude.ai o la app, también gastan del mismo cupo y no se ven acá.
+Los tokens de Opus y de Sonnet no pesan igual en el cupo real; recalibrá si cambia tu mezcla de modelos.
+
+(Esto fue una demostración. Para ver lo tuyo: «claudemon sesiones» y «claudemon modelos».)

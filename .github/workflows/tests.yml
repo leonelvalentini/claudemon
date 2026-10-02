@@ -1,0 +1,48 @@
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    name: ${{ matrix.os }} · Python ${{ matrix.python }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python: ["3.8", "3.12"]
+        exclude:
+          - os: macos-latest      # macOS en Apple Silicon no trae Python 3.8
+            python: "3.8"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Instalar psutil (solo para la pantalla en vivo)
+        run: python -m pip install psutil
+      - name: Correr las pruebas
+        run: python tests/test_claudemon.py
+        env:
+          PYTHONUTF8: "1"
+      - name: Probar el instalador (macOS y Linux)
+        if: runner.os != 'Windows'
+        run: |
+          CLAUDEMON_SIN_PREGUNTAS=1 bash instalar.sh </dev/null
+          "$HOME/.local/bin/claudemon" --version
+          "$HOME/.local/bin/claudemon" demo | head -5
+      - name: Probar el instalador (Windows)
+        if: runner.os == 'Windows'
+        shell: powershell
+        env:
+          CLAUDEMON_SIN_PREGUNTAS: "1"
+        run: |
+          powershell -ExecutionPolicy Bypass -File instalar.ps1
+          if ($LASTEXITCODE -ne 0) { exit 1 }
+          & "$env:USERPROFILE\claudemon\claudemon.cmd" --version
+          if ($LASTEXITCODE -ne 0) { exit 1 }
+          & "$env:USERPROFILE\claudemon\claudemon.cmd" demo
+          if ($LASTEXITCODE -ne 0) { exit 1 }
